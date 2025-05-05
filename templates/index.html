@@ -11,7 +11,25 @@
     <div id="questions"></div>
     <button type="submit">Submit</button>
   </form>
-  
+  <script>
+    async function loadQuestions() {
+      try {
+        const res = await fetch('static/questions.json'); // ✅ Load from static/
+        const data = await res.json();
+        const container = document.getElementById('questions');
+        data.forEach(q => {
+          container.innerHTML += `
+            <label><strong>[${q.category}]</strong> ${q.question}<br>
+              <input name="${q.id}" required><br><br>
+            </label>`;
+        });
+      } catch (err) {
+        console.error("Failed to load questions:", err);
+      }
+    }
+
+    loadQuestions(); // Call the function on page load
+  </script>
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
@@ -32,7 +50,7 @@
 
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
-
+  const res = await fetch('static/questions.json');
   document.getElementById('form').addEventListener('submit', async (e) => {
     e.preventDefault();
     const user_id = document.getElementById('user_id').value;
