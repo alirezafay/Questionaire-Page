@@ -29,3 +29,7 @@ def submit():
         f.write(json.dumps(entry, ensure_ascii=False) + "\n")
 
     return jsonify({"status": "ok", "message": "Saved"})
+    
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))  # Use Render-provided port or default to 5000
+    app.run(host="0.0.0.0", port=port)
