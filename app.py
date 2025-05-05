@@ -13,7 +13,8 @@ def index():
 
 @app.route("/questions")
 def questions():
-    with open("static/questions.json", encoding="utf-8") as f:
+    path = os.path.join(app.static_folder, "questions.json")
+    with open(path, encoding="utf-8") as f:
         return jsonify(json.load(f))
 
 @app.route("/submit", methods=["POST"])
