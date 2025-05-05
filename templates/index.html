@@ -11,10 +11,34 @@
     <div id="questions"></div>
     <button type="submit">Submit</button>
   </form>
+  
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
 
-  <script>
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+    // Your Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDBHkhvmr1dmV8JJYyQ0Pzf7CVc1ecji20",
+      authDomain: "questionaie.firebaseapp.com",
+      projectId: "questionaie",
+      storageBucket: "questionaie.appspot.com",
+      messagingSenderId: "732970239887",
+      appId: "1:732970239887:web:d9bda41b01b646f7572dfa",
+      measurementId: "G-GEPBZMWY9N"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);  // Initialize Firestore
+
+    // Function to load questions
     async function loadQuestions() {
-      const res = await fetch('/questions');
+      const res = await fetch('/questions'); // Adjust this to fetch your actual questions
       const data = await res.json();
       const container = document.getElementById('questions');
       data.forEach(q => {
@@ -25,6 +49,7 @@
       });
     }
 
+    // Handle form submission
     document.getElementById('form').addEventListener('submit', async (e) => {
       e.preventDefault();
       const user_id = document.getElementById('user_id').value;
@@ -34,14 +59,18 @@
         if (key !== 'user_id') answers[key] = val;
       });
 
-      const res = await fetch('/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ user_id, answers })
-      });
-
-      const json = await res.json();
-      alert(json.message);
+      // Save to Firebase Firestore
+      try {
+        const docRef = await addDoc(collection(db, "responses"), {
+          user_id: user_id,
+          answers: answers,
+          timestamp: new Date().toISOString()
+        });
+        alert('Responses saved successfully!');
+      } catch (e) {
+        console.error("Error adding document: ", e);
+        alert('Error saving responses.');
+      }
     });
 
     loadQuestions();
