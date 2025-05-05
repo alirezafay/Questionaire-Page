@@ -1,59 +1,79 @@
-/* style.css */
+/* General page styles */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f5f7fa;
+  background-color: #f4f7fc;
+  color: #2c3e50;
   margin: 0;
-  padding: 20px;
-  color: #333;
+  padding: 30px;
 }
 
 h1 {
   text-align: center;
-  color: #2c3e50;
-  margin-bottom: 30px;
+  color: #34495e;
+  margin-bottom: 40px;
 }
 
+/* Form container */
 form {
   max-width: 700px;
   margin: auto;
-  background-color: #ffffff;
+  background: white;
   padding: 30px;
   border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
 
-label {
+/* Question block (card style) */
+.question-box {
+  background: #ffffff;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-left: 6px solid #3498db;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.4s ease;
+}
+
+.question-box.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.question-box strong {
+  color: #2c3e50;
   display: block;
-  margin-bottom: 15px;
-  font-weight: 500;
+  margin-bottom: 6px;
 }
 
-label strong {
-  color: #34495e;
-}
-
+/* Inputs */
 input[type="text"],
 input[type="email"],
 textarea {
   width: 100%;
-  padding: 10px;
-  margin-top: 6px;
+  padding: 10px 14px;
+  font-size: 15px;
+  margin-top: 8px;
   border: 1px solid #ccc;
   border-radius: 8px;
   box-sizing: border-box;
-  font-size: 16px;
 }
 
+/* Submit button */
 button {
   background-color: #3498db;
   color: white;
-  padding: 12px 24px;
+  padding: 14px 28px;
+  font-size: 16px;
+  font-weight: bold;
   border: none;
   border-radius: 8px;
-  font-size: 16px;
+  margin-top: 20px;
   cursor: pointer;
   display: block;
-  margin: 20px auto 0;
+  margin-left: auto;
+  margin-right: auto;
   transition: background-color 0.3s;
 }
 
